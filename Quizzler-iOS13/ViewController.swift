@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct quizItem {
+  var question: String
+  var answer: Bool
+}
+
 class ViewController: UIViewController {
   
   @IBOutlet weak var questionLabel: UILabel!
@@ -18,9 +23,9 @@ class ViewController: UIViewController {
   var questionNumber = 0
   
   let quiz = [
-    ["Four + Two is equal to Six", "True"],
-    ["Five - Three is greater than One", "True"],
-    ["Three + Eight is less than Ten", "False"]
+    quizItem(question: "Four + Two is equal to Six", answer: true),
+    quizItem(question: "Five - Three is greater than One", answer: true),
+    quizItem(question: "Three + Eight is less than Ten", answer: false),
   ]
   
   override func viewDidLoad() {
@@ -30,8 +35,8 @@ class ViewController: UIViewController {
   }
   
   @IBAction func answerButtonPressed(_ sender: UIButton) {
-    let userAnswer = sender.currentTitle
-    let actualAnswer = quiz[questionNumber][1]
+    let userAnswer = sender.currentTitle == "True"
+    let actualAnswer = quiz[questionNumber].answer
     
     if actualAnswer == userAnswer {
       print("Right")
@@ -46,11 +51,10 @@ class ViewController: UIViewController {
     }
 
     updateUI()
-
   }
 
   func updateUI() {
-    questionLabel.text = quiz[questionNumber][0]
+    questionLabel.text = quiz[questionNumber].question
   }
 }
 
